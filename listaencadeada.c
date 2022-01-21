@@ -2,7 +2,6 @@
 
 Lista *criarlista(){
     Lista *L;
-    printf("Criando lista vazia!");
     L=malloc(sizeof(Lista));
     L->prim=NULL;
     return L;
@@ -22,31 +21,32 @@ char imprime_menu(){
 }
 
 void inserir(Lista *L){
-    No *aux,*novo;
-    novo=malloc(sizeof(No));
-    printf("Insira as informações do contato:");
+    No *aux,*x;
+    x=malloc(sizeof(No));
+    printf("\nInsira as informações do contato:\n");
     printf("\nMatrícula: ");
-    scanf("%d",&novo->contato->matricula);
+    scanf("%d",&x->matricula);
     printf("\nNome: ");
-    scanf("%s",novo->contato->nome);
-    printf("\nQual o numero do DDD? :");
-    scanf("%d",&novo->contato->ddd);
-    printf("\nQual o numero de telefone? :");
-    scanf("%d",&novo->contato->telefone);
+    scanf("%s",x->nome);
+    printf("\nDDD :");
+    scanf("%d",&x->ddd);
+    printf("\nTelefone :");
+    scanf("%d",&x->telefone);
     printf("\nTelefone fixo(F) ou celular(C)? :");
-    scanf("%s",novo->contato->tipo); 
-    aux=L->prim;
-    if(aux==NULL){
-        L->prim=novo;
-        novo->prox=NULL;
-        printf("\nContato adicionado.");
-        return;
+    scanf("%s",x->tipo); 
+    if(L->prim==NULL){
+        x->prox=L->prim;
+        L->prim=x;
     }
-    while(aux->prox!=NULL){
+    else{
+      aux=L->prim;
+      x->prox=NULL;
+      while(aux->prox!=NULL){
         aux=aux->prox;
+      }
+      aux->prox=x;
+      printf("\nContato adicionado.\n");
     }
-    aux->prox=novo;
-    novo->prox=NULL;
 }
 
 void percorrer(Lista *L){
@@ -55,18 +55,20 @@ void percorrer(Lista *L){
     no=L->prim;
     if(no==NULL){
         printf("Lista vazia.");
-        return;
     }
-    do{
-        printf("--------CONTATOS--------");
+    else{
+      printf("--------CONTATOS--------");
+      while(no!=NULL){
         printf("\n\n-----CONTATO %d-----",i);
-        printf("\nMATRICULA:%d",no->contato->matricula);
-        printf("\nNOME:%s",no->contato->nome);
-        printf("\nDDD:%d",no->contato->ddd);
-        printf("\nTELEFONE:%d",no->contato->telefone);
-        printf("\nTIPO:%s",no->contato->tipo);
+        printf("\nMATRICULA:%d",no->matricula);
+        printf("\nNOME:%s",no->nome);
+        printf("\nDDD:%d",no->ddd);
+        printf("\nTELEFONE:%d",no->telefone);
+        printf("\nTIPO:%s",no->tipo);
         no=no->prox;
-    } while (no->prox!=NULL);
+        i++;
+      } 
+    }
     
     
 }
@@ -83,11 +85,11 @@ void carregar(Lista *L){
       no=L->prim;
       while(!feof(file)){
         no=malloc(sizeof(No));
-        fscanf(file,"%d",&no->contato->matricula);
-        fscanf(file,"%s",no->contato->nome);
-        fscanf(file,"%d",&no->contato->ddd);
-        fscanf(file,"%d",&no->contato->telefone);
-        fscanf(file,"%s",no->contato->tipo);
+        fscanf(file,"%d",&no->matricula);
+        fscanf(file,"%s",no->nome);
+        fscanf(file,"%d",&no->ddd);
+        fscanf(file,"%d",&no->telefone);
+        fscanf(file,"%s",no->tipo);
         no=no->prox;
       }
       no->prox=NULL;
@@ -107,11 +109,11 @@ void carregar(Lista *L){
       printf("--------ARQUIVO ABERTO COM SUCESSO!--------\n");
       no=L->prim;
       do{
-        fprintf("%d\n",no->contato->matricula);
-        fprintf("%s\n",no->contato->nome);
-        fprintf("%d\n",no->contato->ddd);
-        fprintf("%d\n",no->contato->telefone);
-        fprintf("%s\n",no->contato->tipo);
+        fprintf("%d\n",no->matricula);
+        fprintf("%s\n",no->nome);
+        fprintf("%d\n",no->ddd);
+        fprintf("%d\n",no->telefone);
+        fprintf("%s\n",no->tipo);
         no=no->prox;
     } while (no->prox!=NULL);
       fclose(file);
