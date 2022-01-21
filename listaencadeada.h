@@ -4,13 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-typedef struct _chave{
-    int matricula,telefone,ddd;
-    char nome[MAXNOME],tipo[2];
-}Chave;
 
 typedef struct _no{
-    Chave *contato;
+    int matricula,telefone,ddd;
+    char nome[MAXNOME],tipo[2];
     struct _no *prox;
 }No;
 
